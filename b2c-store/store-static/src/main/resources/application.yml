@@ -1,0 +1,19 @@
+spring:
+  mvc:
+    static-path-pattern: /public/**
+  resources:
+    static-locations: classpath:/public/
+
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:3012
+management:
+  endpoint:
+    health:
+      show-components: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    enabled-by-default: true

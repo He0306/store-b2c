@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link media="all" rel="stylesheet" th:href="@{/lib/layui-v2.6.3/css/layui.css}">
+    <link media="all" rel="stylesheet" th:href="@{/css/public.css}">
+
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form" lay-filter="eidt">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">分类ID</label>
+        <div class="layui-input-block">
+            <input class="layui-input" id="categoryId" name="categoryId" readonly="readonly" type="text" value="">
+            <tip>id不可修改</tip>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">分类名称</label>
+        <div class="layui-input-block">
+            <input class="layui-input" id="categoryName" lay-reqtext="分类名称不能为空" lay-verify="required"
+                   name="categoryName" placeholder="分类名称" type="text" value="">
+
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-filter="saveBtn" lay-submit>确认修改</button>
+        </div>
+    </div>
+
+</div>
+</div>
+<script charset="utf-8" th:src="@{/lib/layui-v2.6.3/layui.js}"></script>
+<!--<script th:src="@{/lib/jquery-3.4.1/jquery-3.4.1.min.js}"></script>-->
+<script>
+    window.onload = function (e) {
+        console.log(e)
+    }
+
+    layui.use(['form'], function (obj) {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+
+        // //给表单赋值
+        // form.val("eidt", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+        //     "userName": "1756295440" // "name": "value"
+        //     ,"userSex": "男"
+        //     ,"userPhone": "123456789"
+        //     ,"userPassword": "123456"
+        //    , "userAccount":"123456"
+        //     ,"userRole":1,
+        //     "userBalance":100
+        // });
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var index = layer.alert("点击确认修改", {
+                title: '确认提交'
+            }, function () {
+                $.post({
+                    url: "/admin/category/update",
+                    data: data.field,
+                    success: function (data) {
+
+                        layer.msg(data.msg);
+
+                        // 关闭弹出层
+                        layer.close(index);
+                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+                        // 关闭后刷新父页面
+                        parent.location.reload();
+                        parent.layer.close(iframeIndex);
+                    }
+                })
+
+            });
+
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

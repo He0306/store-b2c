@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hc.pay.mapper.OrderMapper">
+
+    <update id="updateState">
+        update orders
+        set state = #{state},alipay_no = #{alipayNo},order_time = #{orderTime}
+        where order_id = #{orderId};
+    </update>
+</mapper>

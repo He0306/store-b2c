@@ -1,0 +1,26 @@
+ribbon:
+  eager-load:
+    enabled: true
+    clients:
+      - search-service
+feign:
+  httpclient:
+    max-connections: 200
+    max-connections-per-route: 50
+spring:
+  profiles:
+    active: mq
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:3012
+management:
+  endpoint:
+    health:
+      show-components: always
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+

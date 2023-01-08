@@ -1,0 +1,72 @@
+spring:
+  # 连接池配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/store_admin?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  profiles:
+    active: cache,mq
+  thymeleaf:
+    cache: true  #开启缓存
+    check-template: true  #检查模板是否存在
+    check-template-location: true # 检查模板位置正确性 默认查找 resources templates文件夹内
+    servlet:
+      content-type: text/html # 直接嵌入到html文件中
+    enabled: true
+    encoding: UTF-8
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:3012
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.hc.pojo #设置别名a
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  eager-load:
+    enabled: true #开启饥饿加载提升第一次访问速度
+    clients:
+      - store-service #指定开启服务
+feign:
+  httpclient:
+    enabled: true  # 开启httpClient开关,启动连接池,提升feign连接效率!
+    max-connections: 200  #最大连接数量
+    max-connections-per-route: 50  #单路径最大连接数
+  client: #默认 1秒
+    default: # 设置连接超时时间
+      ConnectTimeOut: 10000
+      ReadTimeOut: 10000 #设置读取数据超时时间
+
+server:
+  servlet:
+    context-path: /admin
+
+#OSS配置
+aliyun:
+  oss:
+    file:
+      # 控制台 - oss - 点击对应桶 - 概览 - 地域节点
+      endpoint: oss-cn-hangzhou.aliyuncs.com
+      keyid: LTAI5tGjs97ohSN6s8BMW3zh
+      keysecret: OmPSqKOrsIdqSuHY6V2SeAGIQDF9p9
+      bucketname: b2c-sup
+
+management:
+  endpoint:
+    health:
+      show-components: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    enabled-by-default: true

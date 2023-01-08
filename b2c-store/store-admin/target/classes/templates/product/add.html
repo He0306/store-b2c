@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link media="all" rel="stylesheet" th:href="@{/lib/layui-v2.6.3/css/layui.css}">
+    <link media="all" rel="stylesheet" th:href="@{/css/public.css}">
+
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form" lay-filter="eidt">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">商品名称</label>
+        <div class="layui-input-block">
+            <input class="layui-input" id="productName" name="productName" placeholder="商品名称" type="text" value="">
+
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">商品标题</label>
+        <div class="layui-input-block">
+            <input class="layui-input" id="productTitle" name="productTitle"
+                   placeholder="商品标题" type="text" value="">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">市场价</label>
+        <div class="layui-input-block">
+            <input class="layui-input" id="productPrice" name="productPrice"
+                   placeholder="市场价" type="number" value="">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">商场价</label>
+        <div class="layui-input-block">
+            <input class="layui-input" id="productSellingPrice" name="productSellingPrice"
+                   placeholder="商城价" type="number" value="">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">商品图片</label>
+        <button class="layui-btn" id="test1" type="button">
+            <i class="layui-icon">&#xe67c;</i>上传图片
+            <!-- 保存,用于后期保存提交的图片地址 -->
+            <input id="hpp" name="productPicture" type="hidden">
+        </button>
+        <br>
+        <br>
+        <label class="layui-form-label">图片显示</label>
+        <div>
+            <img class="layui-form-label layui-upload-img" id="demo1" style="width: 120px;height: 100px">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">类别</label>
+        <div class="layui-input-block">
+            <select lay-filter="aihao" name="categoryId">
+                <option value="">--------</option>
+                <option th:each="item : ${clist}" th:text="${item.categoryName}" th:value="${item.categoryId}"></option>
+
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">库存数量</label>
+        <div class="layui-input-block">
+            <input class="layui-input" id="productNum" lay-reqtext="" lay-verify="required" name="productNum"
+                   placeholder="库存数量" type="number" value="">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">销售量</label>
+        <div class="layui-input-block">
+            <input class="layui-input" id="productSales" name="productSales" placeholder="商品库存" type="number" value="0">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">商品详情</label>
+        <div class="layui-input-block">
+            <textarea class="layui-input" id="productIntro" name="productIntro" placeholder="描述信息!">
+            </textarea>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-upload">
+            <label class="layui-form-label required" style="margin-left: 30px">详细图片</label>
+            <button class="layui-btn" id="test2" type="button">选择图片</button>
+            <br>
+            <label class="layui-form-label required"> 图片预览</label>
+            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 5px;">
+
+                <div class="layui-upload-list" id="demo2"></div>
+            </blockquote>
+            <!-- 存储多图片 +号拼接  -->
+            <input id="hpps" name="pictures" type="hidden">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-filter="saveBtn" lay-submit>确认保存</button>
+        </div>
+    </div>
+
+</div>
+</div>
+<script charset="utf-8" th:src="@{/lib/layui-v2.6.3/layui.js}"></script>
+<!--<script th:src="@{/lib/jquery-3.4.1/jquery-3.4.1.min.js}"></script>-->
+<script>
+    window.onload = function (e) {
+        console.log(e)
+    }
+
+    var hpp = document.getElementById("hpp");
+    var hpps = document.getElementById("hpps");
+
+    layui.use(['form', 'upload'], function (obj) {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$,
+            upload = layui.upload;
+
+        //主图片
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            , url: '/admin/product/upload' //上传接口
+            , field: 'img'
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                //alert(JSON.stringify(res));
+                hpp.value = res.data;
+            }
+            , error: function () {
+                //请求异常回调
+            }
+        });
+
+
+        //多图片上传
+        upload.render({
+            elem: '#test2'
+            , url: '/admin/product/upload' //此处配置你自己的上传接口即可
+            , multiple: true
+            , field: 'img'
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo2').append('<img style="width: 120px;height: 100px" src="' + result + '" alt="' + file.name + '" class="layui-upload-img">')
+                });
+            }
+            , done: function (res) {
+                alert(JSON.stringify(res));
+                //上传完毕
+                var val = hpps.value;
+                var url = res.data;
+                if (val == null || val == "") {
+                    val += url;
+                } else {
+                    val = val + "+" + url;
+                }
+
+                hpps.value = val; //更新值
+
+            }
+        });
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var index = layer.alert("点击确定添加!", {
+                title: '确认提交'
+            }, function () {
+                $.post({
+                    url: "/admin/product/save",
+                    data: data.field,
+                    success: function (data) {
+                        // 关闭弹出层
+                        layer.close(index);
+                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+                        // 关闭后刷新父页面
+                        parent.location.reload();
+                        parent.layer.close(iframeIndex);
+                    }
+                })
+
+            });
+
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

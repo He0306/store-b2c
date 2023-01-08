@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/admin/admin.iml" filepath="$PROJECT_DIR$/admin/admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/b2c-store.iml" filepath="$PROJECT_DIR$/b2c-store.iml" />
+      <module fileurl="file://$PROJECT_DIR$/store-admin/store-admin.iml" filepath="$PROJECT_DIR$/store-admin/store-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/store-commons/store-commons.iml" filepath="$PROJECT_DIR$/store-commons/store-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/store-front-carousel/store-front-carousel.iml" filepath="$PROJECT_DIR$/store-front-carousel/store-front-carousel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/store-front-cart/store-front-cart.iml" filepath="$PROJECT_DIR$/store-front-cart/store-front-cart.iml" />
+      <module fileurl="file://$PROJECT_DIR$/store-front-collect/store-front-collect.iml" filepath="$PROJECT_DIR$/store-front-collect/store-front-collect.iml" />
+      <module fileurl="file://$PROJECT_DIR$/store-front-order/store-front-order.iml" filepath="$PROJECT_DIR$/store-front-order/store-front-order.iml" />
+      <module fileurl="file://$PROJECT_DIR$/store-front-pay/store-front-pay.iml" filepath="$PROJECT_DIR$/store-front-pay/store-front-pay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/store-front-product/store-front-product.iml" filepath="$PROJECT_DIR$/store-front-product/store-front-product.iml" />
+      <module fileurl="file://$PROJECT_DIR$/store-front-sategory/store-front-sategory.iml" filepath="$PROJECT_DIR$/store-front-sategory/store-front-sategory.iml" />
+      <module fileurl="file://$PROJECT_DIR$/store-front-user/store-front-user.iml" filepath="$PROJECT_DIR$/store-front-user/store-front-user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/store-gateway/store-gateway.iml" filepath="$PROJECT_DIR$/store-gateway/store-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/store-search/store-search.iml" filepath="$PROJECT_DIR$/store-search/store-search.iml" />
+      <module fileurl="file://$PROJECT_DIR$/store-static/store-static.iml" filepath="$PROJECT_DIR$/store-static/store-static.iml" />
+    </modules>
+  </component>
+</project>

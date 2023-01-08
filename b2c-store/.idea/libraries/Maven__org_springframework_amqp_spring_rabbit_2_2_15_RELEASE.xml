@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.springframework.amqp:spring-rabbit:2.2.15.RELEASE">
+    <CLASSES>
+      <root url="jar://D:/Maven/Maven-resp/org/springframework/amqp/spring-rabbit/2.2.15.RELEASE/spring-rabbit-2.2.15.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/Maven/Maven-resp/org/springframework/amqp/spring-rabbit/2.2.15.RELEASE/spring-rabbit-2.2.15.RELEASE-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/Maven/Maven-resp/org/springframework/amqp/spring-rabbit/2.2.15.RELEASE/spring-rabbit-2.2.15.RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

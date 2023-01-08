@@ -1,0 +1,9 @@
+server:
+  port: 3002
+spring:
+  application:
+    name: static-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848

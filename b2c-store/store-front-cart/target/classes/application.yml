@@ -1,0 +1,46 @@
+spring:
+  # 连接池配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/store_cart?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  profiles:
+    active: mq
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:3012
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.hc.pojo #设置别名a
+ribbon:
+  eager-load:
+    enabled: true #开启饥饿加载提升第一次访问速度
+    clients:
+      - cart-service #指定开启服务
+feign:
+  httpclient:
+    enabled: true  # 开启httpClient开关,启动连接池,提升feign连接效率!
+    max-connections: 200  #最大连接数量
+    max-connections-per-route: 50  #单路径最大连接数
+
+management:
+  endpoint:
+    health:
+      show-components: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    enabled-by-default: true
+  health:
+    rabbit:
+      enabled: false

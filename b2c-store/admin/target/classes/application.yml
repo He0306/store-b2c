@@ -1,0 +1,10 @@
+server:
+  port: 3012
+spring:
+  application:
+    name: admin-server
+
+management:
+  endpoint:
+    health:
+      show-components: always

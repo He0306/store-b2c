@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link media="all" rel="stylesheet" th:href="@{lib/layui-v2.6.3/css/layui.css}">
+    <link media="all" rel="stylesheet" th:href="@{/css/public.css}">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form action="" class="layui-form layui-form-pane">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">商品名称</label>
+                            <div class="layui-input-inline">
+                                <input autocomplete="off" class="layui-input" name="goodsName" type="text">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button class="layui-btn layui-btn-primary" lay-filter="data-search-btn" lay-submit
+                                    type="submit"><i class="layui-icon"></i> 搜 索
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script id="toolbarDemo" type="text/html">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加</button>
+            </div>
+        </script>
+
+        <table id="currentTableId" lay-filter="currentTableFilter"></table>
+
+        <script id="currentTableBar" type="text/html">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+        </script>
+
+    </div>
+</div>
+<script charset="utf-8" th:src="@{/lib/layui-v2.6.3/layui.js}"></script>
+<script th:inline="javascript">
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+        table.on('tool(currentTableFilter)', function (obj) {
+            var product = obj.data;
+            if (obj.event === 'edit') {
+
+                var index = layer.open({
+                    title: '编辑商品',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['70%', '80%'],
+                    content: '/admin/product/update/html?categoryId=' + product.category_id,
+                    success: function (layero, index) {
+                        var body = layer.getChildFrame('body', index);
+                        //将选中的数据的id传到编辑页面的隐藏域，便于根据ID修改数据
+                        body.find("#productId").val(product.product_id);
+                        body.find("#productName").val(product.product_name);
+                        body.find("#productTitle").val(product.product_title);
+                        body.find("#productPrice").val(product.product_price);
+                        body.find("#productSellingPrice").val(product.product_selling_price);
+                        body.find("#productNum").val(product.product_num);
+                        body.find("#productSales").val(product.product_sales);
+                        body.find("#productIntro").val(product.product_intro);
+                        body.find("#productPicture").val(product.product_picture);
+                    }
+                });
+                $(window).on("resize", function () {
+                    layer.full(index, userInfo);
+                });
+                return false;
+            } else if (obj.event === 'delete') {
+                layer.confirm('确定删除数据?', function (index) {
+
+                    // console.log(obj.data.userId)
+                    $.post({
+                        url: "/admin/product/remove",
+                        data: {
+                            productId: obj.data.product_id
+                        },
+                        success: function (resp) {
+                            layer.msg(resp.msg);
+                            if (resp.code == "001") {
+
+                                //obj.del();//删除数据
+                                table.reload('currentTableId', {
+                                    page: {
+                                        curr: 1,
+                                        limit: 15
+                                    }
+                                }, 'data');
+                            }
+
+
+                        },
+                        field: function (resp) {
+
+                        }
+                    })
+                    layer.close(index);
+                });
+            }
+        });
+    })
+</script>
+<script th:inline="none">
+    // var cpxPath=[[${"/"}]]
+
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+        table.render({
+            elem: '#currentTableId',
+            url: '/admin/product/list',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [[
+                {field: 'product_id', width: 80, title: 'ID', sort: true},
+                {field: 'product_name', width: 100, title: '商品名称', sort: true},
+                {field: 'category_id', width: 80, title: '类别ID'},
+                {field: 'product_title', width: 110, title: '标题'},
+                {field: 'product_picture', title: '图片地址', width: 130},
+                {field: 'product_price', title: '商品价格', width: 100},
+                {field: 'product_selling_price', title: '商城价格', width: 100},
+                {field: 'product_sales', width: 80, title: '销售量', sort: true},
+                {field: 'product_num', width: 80, title: '商品库存', sort: true},
+                {field: 'product_intro', width: 150, title: '商品描述', sort: false},
+                {title: '操作', minWidth: 40, toolbar: '#currentTableBar', align: "center"}
+            ]],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 15,
+            response: {
+                statusName: 'code' //规定数据状态的字段名称，默认：code
+                , statusCode: "001" //规定成功的状态码，默认：0
+                , msgName: 'msg' //规定状态信息的字段名称，默认：msg
+                , countName: 'total' //规定数据总数的字段名称，默认：count
+                , dataName: 'data' //规定数据列表的字段名称，默认：data
+            },
+            request: {
+                pageName: 'currentPage' //页码的参数名称，默认：page
+                , limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            },
+            page: true,
+            skin: 'line'
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            var key = data.field.goodsName;
+            //执行搜索重载
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    search: key
+                }
+            }, 'data');
+
+            return false;
+        });
+
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听添加操作
+                var index = layer.open({
+                    title: '添加用户',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['70%', '80%'],
+                    content: '/admin/product/save/html',
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+            } else if (obj.event === 'delete') {  // 监听删除操作
+                var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+                layer.alert(JSON.stringify(data));
+            }
+        });
+
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function (obj) {
+            console.log(obj)
+        });
+
+    });
+</script>
+
+</body>
+</html>

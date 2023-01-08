@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <link media="all" rel="stylesheet" th:href="@{lib/layui-v2.6.3/css/layui.css}">
+    <link media="all" rel="stylesheet" th:href="@{/css/public.css}">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <!--        <fieldset class="table-search-fieldset">-->
+        <!--            <legend>搜索信息</legend>-->
+        <!--            <div style="margin: 10px 10px 10px 10px">-->
+        <!--                <form class="layui-form layui-form-pane" action="">-->
+        <!--                    <div class="layui-form-item">-->
+        <!--                        <div class="layui-inline">-->
+        <!--                            <label class="layui-form-label">商品名称</label>-->
+        <!--                            <div class="layui-input-inline">-->
+        <!--                                <input type="text" name="goodsName" autocomplete="off" class="layui-input">-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                        <div class="layui-inline">-->
+        <!--                            <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </form>-->
+        <!--            </div>-->
+        <!--        </fieldset>-->
+
+        <script id="toolbarDemo" type="text/html">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加</button>
+                <!--                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>-->
+            </div>
+        </script>
+
+        <table id="currentTableId" lay-filter="currentTableFilter"></table>
+
+        <script id="currentTableBar" type="text/html">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+        </script>
+
+    </div>
+</div>
+<script charset="utf-8" th:src="@{/lib/layui-v2.6.3/layui.js}"></script>
+<script th:inline="none">
+    // var cpxPath=[[${"/"}]]
+
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+        table.render({
+            elem: '#currentTableId',
+            url: '/admin/category/list',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [[
+                {field: 'category_id', width: 80, title: 'ID', sort: true},
+                {field: 'category_name', width: 150, title: '类别'},
+                {title: '操作', minWidth: 40, toolbar: '#currentTableBar', align: "center"}
+            ]],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 15,
+            response: {
+                statusName: 'code' //规定数据状态的字段名称，默认：code
+                , statusCode: "001" //规定成功的状态码，默认：0
+                , msgName: 'msg' //规定状态信息的字段名称，默认：msg
+                , countName: 'total' //规定数据总数的字段名称，默认：count
+                , dataName: 'data' //规定数据列表的字段名称，默认：data
+            },
+            request: {
+                pageName: 'currentPage' //页码的参数名称，默认：page
+                , limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            },
+            page: true,
+            skin: 'line'
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            var result = JSON.stringify(data.field);
+            layer.alert(result, {
+                title: '最终的搜索信息'
+            });
+
+            //执行搜索重载
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    searchParams: result
+                }
+            }, 'data');
+
+            return false;
+        });
+
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听添加操作
+                var index = layer.open({
+                    title: '添加用户',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['70%', '80%'],
+                    content: '/admin/category/save/html',
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+            } else if (obj.event === 'delete') {  // 监听删除操作
+                var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+                layer.alert(JSON.stringify(data));
+            }
+        });
+
+        //监听表格复选框选择
+        table.on('checkbox(currentTableFilter)', function (obj) {
+            console.log(obj)
+        });
+
+    });
+</script>
+<script th:inline="javascript">
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+        table.on('tool(currentTableFilter)', function (obj) {
+            var categoryInfo = obj.data;
+            if (obj.event === 'edit') {
+
+                var index = layer.open({
+                    title: '编辑',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['70%', '80%'],
+                    content: '/admin/category/update/html',
+                    success: function (layero, index) {
+                        var body = layer.getChildFrame('body', index);
+                        //将选中的数据的id传到编辑页面的隐藏域，便于根据ID修改数据
+                        body.find("#categoryId").val(categoryInfo.category_id);
+                        body.find("#categoryName").val(categoryInfo.category_name);
+                    }
+                });
+                $(window).on("resize", function () {
+                    layer.full(index, userInfo);
+                });
+                return false;
+            } else if (obj.event === 'delete') {
+                layer.confirm('确定删除数据?', function (index) {
+                    // console.log(obj.data.userId)
+                    $.post({
+                        url: "/admin/category/remove",
+                        data: {
+                            categoryId: obj.data.category_id
+                        },
+                        success: function (resp) {
+                            // console.log(obj.data.userId)
+                            // console.log(resp)
+                            if (resp.code == '001') {
+                                layer.msg(resp.msg);
+                                //obj.del();//删除数据
+                                table.reload('currentTableId', {
+                                    page: {
+                                        curr: 1,
+                                        limit: 15
+                                    }
+                                }, 'data');
+                            } else {
+                                layer.msg(resp.msg);
+                            }
+
+                        },
+                        field: function (resp) {
+
+                        }
+                    })
+                    layer.close(index);
+                });
+            }
+        });
+    })
+</script>
+
+
+</body>
+</html>

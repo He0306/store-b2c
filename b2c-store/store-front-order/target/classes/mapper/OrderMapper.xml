@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hc.order.mapper.OrderMapper">
+
+    <select id="selectAdminOrder" resultType="com.hc.vo.AdminOrderVo">
+        SELECT order_id           orderId,
+               user_id            userId,
+               COUNT(product_id)  productNum,
+               SUM(product_num)   orderNum,
+               SUM(product_price) orderPrice,
+               order_time         orderTime
+        FROM orders
+        GROUP BY order_id, user_id, order_time LIMIT #{offset}, #{pageSize};
+    </select>
+</mapper>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>电商后台管理-登陆</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="*" http-equiv="Access-Control-Allow-Origin">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="telephone=no" name="format-detection">
+    <link media="all" rel="stylesheet" th:href="@{/lib/layui-v2.6.3/css/layui.css}">
+
+    <![endif]-->
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden
+        }
+
+        body {
+            background: #1E9FFF;
+        }
+
+        body:after {
+            content: '';
+            background-repeat: no-repeat;
+            background-size: cover;
+            -webkit-filter: blur(3px);
+            -moz-filter: blur(3px);
+            -o-filter: blur(3px);
+            -ms-filter: blur(3px);
+            filter: blur(3px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        .layui-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden
+        }
+
+        .admin-login-background {
+            width: 360px;
+            height: 300px;
+            position: absolute;
+            left: 50%;
+            top: 40%;
+            margin-left: -180px;
+            margin-top: -100px;
+        }
+
+        .logo-title {
+            text-align: center;
+            letter-spacing: 2px;
+            padding: 14px 0;
+        }
+
+        .logo-title h1 {
+            color: #1E9FFF;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .login-form {
+            background-color: #fff;
+            border: 1px solid #fff;
+            border-radius: 3px;
+            padding: 14px 20px;
+            box-shadow: 0 0 8px #eeeeee;
+        }
+
+        .login-form .layui-form-item {
+            position: relative;
+        }
+
+        .login-form .layui-form-item label {
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            width: 38px;
+            line-height: 36px;
+            text-align: center;
+            color: #d2d2d2;
+        }
+
+        .login-form .layui-form-item input {
+            padding-left: 36px;
+        }
+
+        .captcha {
+            width: 60%;
+            display: inline-block;
+        }
+
+        .captcha-img {
+            display: inline-block;
+            width: 34%;
+            float: right;
+        }
+
+        .captcha-img img {
+            height: 34px;
+            border: 1px solid #e6e6e6;
+            height: 36px;
+            width: 100%;
+        }
+
+        #captchaPic {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-container">
+    <div class="admin-login-background">
+        <div class="layui-form login-form">
+            <form action="admin/user/login" class="layui-form" method="post">
+                <div class="layui-form-item logo-title">
+                    <h1>电商后台登录</h1>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-icon layui-icon-username" for="username"></label>
+                    <input autocomplete="off" class="layui-input" lay-verify="required|account" name="userAccount"
+                           placeholder="用户名或者邮箱" type="text" value="admin123">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-icon layui-icon-password" for="password"></label>
+                    <input autocomplete="off" class="layui-input" lay-verify="required|password" name="userPassword"
+                           placeholder="密码" type="password" value="admin123">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-icon layui-icon-vercode" for="captcha"></label>
+                    <input autocomplete="off" class="layui-input verification captcha" lay-verify="required|captcha"
+                           name="verCode" placeholder="图形验证码" type="text" value="">
+                    <div class="captcha-img">
+                        <img id="captchaPic" src="/admin/captcha">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn layui-btn layui-btn-normal layui-btn-fluid" id="loginBtn"
+                            lay-filter="login" lay-submit="">登录
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script charset="utf-8" th:src="@{/lib/jquery-3.4.1/jquery-3.4.1.min.js}"></script>
+<script charset="utf-8" th:src="@{/lib/layui-v2.6.3/layui.js}"></script>
+<script charset="utf-8" th:src="@{/lib/jq-module/jquery.particleground.min.js}"></script>
+<script th:inline="javascript">
+    $("#captchaPic").click(function () {
+        $("#captchaPic").attr("src", '/admin/captcha?date=' + new Date().getTime())
+    })
+
+
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer;
+
+        // 登录过期的时候，跳出ifram框架
+        if (top.location != self.location) top.location = self.location;
+
+        // 粒子线条背景
+        $(document).ready(function () {
+            $('.layui-container').particleground({
+                dotColor: '#7ec7fd',
+                lineColor: '#7ec7fd'
+            });
+        });
+
+        // 进行登录操作
+        form.on('submit(login)', function (data) {
+            //按钮置灰
+            $("#loginBtn").attr("disabled", "disabled").addClass("layui-btn-disabled");
+
+
+            data = data.field;
+            if (data.userAccount == '') {
+                layer.msg('用户名不能为空');
+                return false;
+            }
+            if (data.userPassword == '') {
+                layer.msg('密码不能为空');
+                return false;
+            }
+            if (data.verCode == '') {
+                layer.msg('验证码不能为空');
+                return false;
+            }
+
+            $.post({
+                url: "/admin/user/login",
+                data: {
+                    userAccount: data.userAccount,
+                    userPassword: data.userPassword,
+                    verCode: data.verCode
+                },
+                success: function (resp) {
+
+                    //alert(JSON.stringify(resp));
+
+                    if (resp.code == "001") {
+                        layer.msg('登录成功', {icon: 6, time: 1000}, function () {
+                            //登录访问
+                            window.location = '/admin/home';
+                        });
+                    } else {
+                        layer.msg('账号或密码错误', {icon: 5, time: 1000}, function () {
+                            $("#loginBtn").removeAttr("disabled").removeClass("layui-btn-disabled");
+                        });
+                    }
+                },
+                faild: function (err) {
+                    console.log(err)
+                }
+            })
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

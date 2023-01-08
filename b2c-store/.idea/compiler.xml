@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="store-front-product" />
+        <module name="store-static" />
+        <module name="admin" />
+        <module name="store-front-sategory" />
+        <module name="store-commons" />
+        <module name="store-front-pay" />
+        <module name="store-front-user" />
+        <module name="store-front-cart" />
+        <module name="store-front-order" />
+        <module name="store-admin" />
+        <module name="store-front-carousel" />
+        <module name="store-search" />
+        <module name="store-front-collect" />
+        <module name="store-gateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="admin" target="1.8" />
+      <module name="b2c-store" target="1.8" />
+      <module name="store-admin" target="1.8" />
+      <module name="store-commons" target="1.8" />
+      <module name="store-front-carousel" target="1.8" />
+      <module name="store-front-cart" target="1.8" />
+      <module name="store-front-collect" target="1.8" />
+      <module name="store-front-order" target="1.8" />
+      <module name="store-front-pay" target="1.8" />
+      <module name="store-front-product" target="1.8" />
+      <module name="store-front-sategory" target="1.8" />
+      <module name="store-front-user" target="1.8" />
+      <module name="store-gateway" target="1.8" />
+      <module name="store-search" target="1.8" />
+      <module name="store-static" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="admin" options="-parameters" />
+      <module name="store-admin" options="-parameters" />
+      <module name="store-commons" options="-parameters" />
+      <module name="store-front-carousel" options="-parameters" />
+      <module name="store-front-cart" options="-parameters" />
+      <module name="store-front-collect" options="-parameters" />
+      <module name="store-front-order" options="-parameters" />
+      <module name="store-front-pay" options="-parameters" />
+      <module name="store-front-product" options="-parameters" />
+      <module name="store-front-sategory" options="-parameters" />
+      <module name="store-front-user" options="-parameters" />
+      <module name="store-gateway" options="-parameters" />
+      <module name="store-search" options="-parameters" />
+      <module name="store-static" options="-parameters" />
+    </option>
+  </component>
+</project>

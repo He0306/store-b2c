@@ -1,0 +1,61 @@
+spring:
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:3012
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user/**
+        - id: static-service
+          uri: lb://static-service
+          predicates:
+            - Path=/public/**
+        - id: carousel-service
+          uri: lb://carousel-service
+          predicates:
+            - Path=/carousel/**
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/product/**
+        - id: search-service
+          uri: lb://search-service
+          predicates:
+            - Path=/search/**
+        - id: collect-service
+          uri: lb://collect-service
+          predicates:
+            - Path=/collect/**
+        - id: cart-service
+          uri: lb://cart-service
+          predicates:
+            - Path=/cart/**
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/admin/**
+        - id: pay-service
+          uri: lb://pay-service
+          predicates:
+            - Path=/alipay/**
+
+management:
+  endpoint:
+    health:
+      show-components: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    enabled-by-default: true
