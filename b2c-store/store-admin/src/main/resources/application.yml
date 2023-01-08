@@ -56,10 +56,10 @@ aliyun:
   oss:
     file:
       # 控制台 - oss - 点击对应桶 - 概览 - 地域节点
-      endpoint: oss-cn-hangzhou.aliyuncs.com
-      keyid: LTAI5tGjs97ohSN6s8BMW3zh
-      keysecret: OmPSqKOrsIdqSuHY6V2SeAGIQDF9p9
-      bucketname: b2c-sup
+      endpoint: 
+      keyid: 
+      keysecret: 
+      bucketname: 
 
 management:
   endpoint:
