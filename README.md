@@ -27,6 +27,8 @@ bbitMQ + OSS + Nacos + OpenFegin + Gateway
 
 * 整体架构采用b2c商城模式
 
+* 使用QQ邮箱进行验证
+
 * 接入支付宝沙箱支付，完成支付功能
 
 * 使用Nacos作为服务注册中心和配置中心
