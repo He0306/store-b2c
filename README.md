@@ -1,4 +1,33 @@
-# 仿小米商城
+<h4 align="center">仿小米商城</h4>
+<p align="center">
+	</a>
+        <a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-Spring%20Boot-blueviolet" />
+	</a>
+	</a>
+        <a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-MySQL-blueviolet" />
+	</a>
+	<a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-JWT-blueviolet" />
+	</a>
+	<a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-Vue-blueviolet" />
+	</a>
+	<a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-Axios-blueviolet" />
+	</a>
+	<a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-Echarts-blueviolet" />
+	</a>
+	<a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-Element%20UI-blueviolet" />
+	</a>
+	<a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-Mybatis%20Plus-blueviolet" />
+	</a>
+	
+</p>
 
 #### 介绍
 
