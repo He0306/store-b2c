@@ -2,7 +2,7 @@
 <p align="center">
 	</a>
         <a target="_blank" href="https://github.com/He0306/meeting">
-		<img src="https://img.shields.io/badge/-Spring%20Boot-blueviolet" />
+		<img src="https://img.shields.io/badge/-Spring%20Boot-blue" />
 	</a>
 	</a>
         <a target="_blank" href="https://github.com/He0306/meeting">
