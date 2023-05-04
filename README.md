@@ -9,7 +9,25 @@
 		<img src="https://img.shields.io/badge/-MySQL-blueviolet" />
 	</a>
 	<a target="_blank" href="https://github.com/He0306/meeting">
-		<img src="https://img.shields.io/badge/-JWT-blueviolet" />
+		<img src="https://img.shields.io/badge/-Redis-blueviolet" />
+	</a>
+	<a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-Elasticsearch-blueviolet" />
+	</a>
+	<a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-Gateway-blueviolet" />
+	</a>
+	<a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-Nacos-blueviolet" />
+	</a>
+	<a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-OpenFeign-blueviolet" />
+	</a>
+	<a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-SpringBoot%20Admin-blueviolet" />
+	</a>
+	<a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-LayUI%20Admin-blueviolet" />
 	</a>
 	<a target="_blank" href="https://github.com/He0306/meeting">
 		<img src="https://img.shields.io/badge/-Vue-blueviolet" />
@@ -25,6 +43,9 @@
 	</a>
 	<a target="_blank" href="https://github.com/He0306/meeting">
 		<img src="https://img.shields.io/badge/-Mybatis%20Plus-blueviolet" />
+	</a>
+	<a target="_blank" href="https://github.com/He0306/meeting">
+		<img src="https://img.shields.io/badge/-OSS阿里云-blueviolet" />
 	</a>
 	
 </p>
